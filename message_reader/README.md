@@ -1,16 +1,25 @@
 # message_reader
 
-A new Flutter project.
+A new simple Flutter project that display externals messages :
+
+![screenshot](../screenshot.png)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### endpoint
+we need an https endpoint to get messages, expected return :
+```json
+[{ "date" :"2025-01-16 21:12",
+  "name" :"senderName", 
+  "tel" :"sender phone number",
+  "message" :"sender message",
+  "email" :"sender@mail.mx",
+  "debug" :"any extra data" },
+  {/*...*/}]
+```
+### dot env
+copy ([dotenv.sample](./dotenv.sample)) to `.env`
 
-A few resources to get you started if this is your first Flutter project:
+then edit your `.env` file following instructions in sample.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+`.env` is gitignore.

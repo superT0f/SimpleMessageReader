@@ -1,16 +1,17 @@
 # message_reader
 
-A new Flutter project.
+A new simple Flutter project that display externals messages :
 
-## Getting Started
+![screenshot](./screenshot.png)
 
-This project is a starting point for a Flutter application.
+## setup
+you must provide an endpoint and config your dot env file.
+([more detail here](./message_reader/README.md))
 
-A few resources to get you started if this is your first Flutter project:
+## current limitations
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- field name are hardcoded : 
+_"email", "name", "phone", "message"_.
+- endpoint must be https and basicAuth protected.
+- look and feel is also hardcoded.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
