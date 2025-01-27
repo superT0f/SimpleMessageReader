@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -14,19 +13,15 @@ class MessageReaderWidget extends StatefulWidget {
 }
 
 class _MessageReaderWidgetState extends State<MessageReaderWidget> {
-  List<EnkMessage> enkMessages = List.empty();
-  static String cprDataURL =
-      "https://enkce-enrobe.fr/v2/logs/message.php";
-
+  List<Message> messages = List.empty();
 
   void _loadData() {
-    // String jsonData = "";
-    if (enkMessages.isEmpty){
-      downloadJson(cprDataURL).then((jsonData) {
+    if (messages.isEmpty) {
+      downloadJson().then((jsonData) {
         setState(() {
           List<dynamic> jsonResponse = json.decode(jsonData);
-          enkMessages = jsonResponse
-              .map((e) => EnkMessage.fromJson(e as Map<String, dynamic>))
+          messages = jsonResponse
+              .map((e) => Message.fromJson(e as Map<String, dynamic>))
               .toList();
         });
       });
@@ -50,26 +45,26 @@ class _MessageReaderWidgetState extends State<MessageReaderWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            EnkMessagesListWidget(enkMessages: enkMessages,),
+            MessagesListWidget(
+              messages: messages,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Future<String> downloadJson(String url) async {
+  Future<String> downloadJson() async {
     try {
-
       var response = await http.get(AppConfig.apiUrl,
           headers: <String, String>{'authorization': AppConfig.basicAuth});
       if (kDebugMode) {
         debugPrint(" response : $response");
       }
       if (response.statusCode == 200) {
-        if (kDebugMode){
+        if (kDebugMode) {
           debugPrint(response.body);
         }
-
 
         return response.body;
       } else {
@@ -82,55 +77,102 @@ class _MessageReaderWidgetState extends State<MessageReaderWidget> {
   }
 }
 
-class EnkMessagesListWidget extends StatelessWidget{
-  const EnkMessagesListWidget({super.key, required this.enkMessages} );
-final List<EnkMessage> enkMessages;
+class MessagesListWidget extends StatelessWidget {
+  const MessagesListWidget({super.key, required this.messages});
+  final List<Message> messages;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: <Widget>[
-        Text("Message : ${enkMessages.length}"),
-        Spacer(),
-        getTextWidgets()
+        Text("Message : ${messages.length}"),
+        getContentWidgets()
       ],
     );
   }
- getTextWidgets()
-  {
-    return Column(
-        children: enkMessages.map((item) =>
-    Text('$item', style: TextStyle(color: Colors.red ),)).toList());
+
+  getContentWidgets() {
+    List<Row> lines = [
+    Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          getHeaderCell("email"),
+          getHeaderCell("name"),
+          getHeaderCell("phone"),
+          getHeaderCell("message"),
+      ])
+    ];
+    for (var message in messages) {
+      var line = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+        getCell(message.email),
+        getCell(message.name),
+        getCell(message.phone),
+        getCell(message.message),
+      ]);
+      lines.add(line);
+    }
+    return Column(children: lines);
   }
 }
+getHeaderCell(String data) {
+  return Container(
+    alignment: Alignment.center,
+    width: 150,
+    height: 50,
+    margin: const EdgeInsets.all(1.0),
+    padding: const EdgeInsets.all(3.0),
+    decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        color: Colors.grey
+    ),
+    child: Text(data),
+  );
+}
 
-class EnkMessage {
+
+getCell(String data) {
+    return Container(
+      width: 150,
+    height: 50,
+    margin: const EdgeInsets.all(1.0),
+    padding: const EdgeInsets.all(3.0),
+    decoration: BoxDecoration(
+        border: Border.all(color: Colors.green),
+            color: Colors.lightBlueAccent
+    ),
+    child: Text(data),
+  );
+}
+
+class Message {
   final String name;
-  final String tel;
+  final String phone;
   final String email;
-  final String? message;
+  final String message;
   final String? debug;
 
-  EnkMessage({
+  Message({
     required this.name,
-    required this.tel,
+    required this.phone,
     required this.email,
     required this.message,
     this.debug,
   });
 
-  factory EnkMessage.fromJson(Map<String, dynamic> json) {
-    return EnkMessage(
+  factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
       name: json['name'] as String,
-      tel: json['tel'] as String,
+      phone: json['tel'] as String,
       email: json['email'] as String,
-      message: json['message'] as String?,
+      message: json['message'] as String,
       debug: json['robot'] as String?,
     );
   }
   @override
   String toString() {
-    return '$name | $email | $tel';
+    return '$name | $email | $phone';
   }
 
   Future<String> downloadJson(String url) async {
@@ -141,16 +183,13 @@ class EnkMessage {
         //   debugPrint(response.body);
         // }
 
-
         return response.body;
       } else {
         throw Exception(
-            'Failed to load JSON data from the internet. Status code: ${response
-                .statusCode}');
+            'Failed to load JSON data from the internet. Status code: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Error downloading JSON: $e');
     }
   }
-
 }
