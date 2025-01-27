@@ -13,7 +13,7 @@ class MessageReader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'MessageReader assistant',
+      title: 'Message Reader for Enver Naser Kostanica & Catherine Edona',
       home: MessageReaderWidget(),
     );
   }
