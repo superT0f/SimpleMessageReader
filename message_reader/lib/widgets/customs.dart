@@ -17,7 +17,7 @@ class Custom {
     fontWeight: FontWeight.bold,
   );
   static TextStyle mailTextStyle = TextStyle(
-    fontSize: 10,
+    fontSize: 12,
   );
 
   static CircleAvatar deleteBtn = CircleAvatar(
@@ -40,6 +40,8 @@ class Custom {
       height: 100,
       width: 60,
       color: Colors.transparent,
+      padding: const EdgeInsets.all(2),
+      margin: const EdgeInsets.all(2),
       child: Custom.deleteBtn
   );
 
@@ -62,19 +64,19 @@ class Custom {
   static var tableHead =
   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
     Container(width: 60),
-    Custom.getCell(Text("email"), height: 75, alignment: Alignment.center),
+    //Custom.getCell(Text("email"), height: 75, alignment: Alignment.center),
     Custom.getCell(Text("name"), height: 75, alignment: Alignment.center),
-    Custom.getCell(Text("phone"),
-        height: 75, width: 150, alignment: Alignment.center),
+    Custom.getCell(Text("phone / mail"),
+        height: 75, width: 250, alignment: Alignment.center),
     Custom.getCell(Text("message"),
         height: 75,
         alignment: Alignment.center,
         width: Custom.messageWidth),
   ]);
 
-  static var emailCellColor = Colors.white60;
+  static var emailCellColor = Colors.white70;
   static var phoneCellColor = Colors.white70;
-  static var nameCellColor = Colors.white60;
+  static var nameCellColor = Colors.white70;
 
   static Container introWidget(int messagesLength) {
     return Container(
@@ -100,10 +102,13 @@ class Custom {
         label: Text(phone, style: Custom.h1TextStyle));
   }
   static Widget mailBtn(String mail) {
+    if (mail.length>40) {
+      mail = "${mail.substring(0,37)}...";
+    }
     return TextButton.icon(
         icon: Icon(Icons.mail),
         onPressed: () => launchUrlString("mailto:$mail"),
-        label: Text("${mail.substring(0,15)}...", style: Custom.mailTextStyle,));
+        label: Text(mail, style: Custom.mailTextStyle,));
   }
   static Widget getMessageBox(String message) {
     return
@@ -133,20 +138,31 @@ class Custom {
   static getMessageWithOrder(List<Message> messages) {
     return messages.reversed;
   }
-
-  static emailCell(email) {
-    return Custom.getCell(
-        Custom.mailBtn(email),
-        color: Custom.emailCellColor);
-  }
-
   static nameCell(name) {
     return  getCell(Text(name), color: Custom.nameCellColor);
   }
 
+  static emailCell(email) {
+      return Container(
+        alignment: Alignment.topLeft,
+          color: Custom.phoneCellColor, width: 250, height : 50,
+        margin: const EdgeInsets.all(0),
+        padding: const EdgeInsets.all(2),
+        child: Custom.mailBtn(email),
+
+      );
+  }
+
+
+
   static phoneCell(phone) {
-    return getCell(Custom.phoneBtn(phone),
-        color: Custom.phoneCellColor, width: 150);
+    return Container(
+      alignment: Alignment.topLeft,
+      color: Custom.phoneCellColor,
+      width: 250,
+      height: 50,
+      child: Custom.phoneBtn(phone),
+    );
   }
 }
 

@@ -82,12 +82,15 @@ class MessagesListWidget extends StatelessWidget {
   getContentWidgets() {
     List<Row> lines = [Custom.tableHead];
     for (var message in Custom.getMessageWithOrder(messages)) {
-
       var line = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Custom.deleteContainer,
-        Custom.emailCell(message.email),
         Custom.nameCell(message.name),
-        Custom.phoneCell(message.phone),
+        Column(
+          children: [
+            Custom.emailCell(message.email),
+            Custom.phoneCell(message.phone),
+          ],
+        ),
         Custom.getCell(Custom.getMessageBox(message.message),
             color: Colors.white70, width: Custom.messageWidth),
       ]);

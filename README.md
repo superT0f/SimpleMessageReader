@@ -2,7 +2,12 @@
 
 A new simple Flutter project that display externals messages :
 
-![screenshot](./screenshot.png)
+app release with no customization :
+![screenshot application](./screenshot_app.png)
+
+android release with customization :
+![screenshot android](./screenshot_android.png)
+
 
 ## setup
 you must provide an endpoint and config your dot env file.
@@ -13,5 +18,5 @@ you must provide an endpoint and config your dot env file.
 - field name are hardcoded : 
 _"email", "name", "phone", "message"_.
 - endpoint must be https and basicAuth protected.
-- look and feel is also hardcoded.
+- look and feel gather in [one file](./message_reader/lib/widgets/customs.dart) but also hardcoded.
 
