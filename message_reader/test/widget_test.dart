@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:message_reader/main.dart';
 import 'package:message_reader/message_reader_widget.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('dummy smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MessageReaderWidget());
-
+    // _MessageReaderWidgetState.
+    await tester.pumpWidget(
+        const MaterialApp(
+          title: 'Message Reader for Enver Naser Kostanica & Catherine Edona',
+          home: MessageReaderWidget(),
+        )
+        );
+    expect(find.text('test todo ?'), findsNothing);
     // // Verify that our counter starts at 0.
     // expect(find.text('0'), findsOneWidget);
     // expect(find.text('1'), findsNothing);
