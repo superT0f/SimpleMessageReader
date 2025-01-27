@@ -164,7 +164,7 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
       name: json['name'] as String,
-      phone: json['tel'] as String,
+      phone: json['phone'] as String,
       email: json['email'] as String,
       message: json['message'] as String,
       debug: json['robot'] as String?,
