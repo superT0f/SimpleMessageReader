@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:message_reader/message.dart';
+import 'package:message_reader/widgets/themes/enk.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Custom {
@@ -87,9 +88,7 @@ class Custom {
     ]);
   }
 
-  static var emailCellColor = Colors.white70;
-  static var phoneCellColor = Colors.white70;
-  static var nameCellColor = Colors.white70;
+
 
   static Widget introWidget(int messagesLength, Function refreshFunc) {
     return Container(
@@ -173,7 +172,7 @@ class Custom {
     // return  getCell(Text(name), width: width, height: height, color: Custom.nameCellColor, );
     return Container(
         alignment: Alignment.topCenter,
-        color: Custom.phoneCellColor,
+        color: phoneCellColor,
         width: width,
         height: height,
         margin: const EdgeInsets.all(0),
@@ -190,7 +189,7 @@ class Custom {
     }
     return Container(
       alignment: Alignment.topLeft,
-      color: Custom.phoneCellColor,
+      color: phoneCellColor,
       width: width,
       height: height,
       margin: const EdgeInsets.all(0),
@@ -209,7 +208,7 @@ class Custom {
 
     return Container(
       alignment: Alignment.topLeft,
-      color: Custom.phoneCellColor,
+      color: phoneCellColor,
       width: width,
       height: height,
       child: Custom.phoneBtn(phone),
