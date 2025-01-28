@@ -1,7 +1,7 @@
 name: message_reader
 description: "A simple Flutter app to read message."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.42+1
 environment:
   sdk: ^3.6.0
 dependencies:
@@ -35,4 +35,4 @@ flutter_launcher_icons:
   windows:
     generate: true
     image_path: "assets/images/logo.png"
-    icon_size: 124 # min:48, max:256, default: 48
+    icon_size: 90 # min:48, max:256, default: 48
